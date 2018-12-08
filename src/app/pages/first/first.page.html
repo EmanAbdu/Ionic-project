@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>
+      Sliding item problem
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon name="more" slot="icon-only"></ion-icon>
+      </ion-button>
+
+    </ion-buttons>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+<h2>Description</h2>
+  <p>If you slide item and click on 'Hide' button, that list item is marked with <code>'hidden=true'</code> flag, and therefore hidden (using <code>*ngIf=!item.deleted</code> in the template). After 1000 miliseconds, item is marked as not deleted again (using <code>setTimeout</code>) and it shows again, but sliding no longer works like it should: If you try to slide an item, visually nothing happens but <b>you can click on the place where button should be.</b></p>
+  
+
+  <ion-list #theList lines="full" inset="false">
+    <ion-item-sliding tappable *ngFor="let c of listItems; let i=index" #slidingItem>
+			<ion-item *ngIf="!c.hidden">
+        <ion-label>
+          <h2><b>{{c.name}}</b></h2>
+          <p>{{c.description}}</p>
+        </ion-label>
+			</ion-item>
+			<ion-item-options side="end">
+					<ion-item-option color="danger" (click)="hideItem(slidingItem, i)">Hide
+					</ion-item-option>
+			</ion-item-options>
+      </ion-item-sliding>
+  </ion-list>
+  <ion-label>{{labelText}}</ion-label>
+
+<p>Here I am using <code>@ionic/angular@4.0.0-beta.5</code>, but problem is also there with <code>@ionic/angular@4.0.0-beta.13</code> on my local machine.</p>
+
+<ion-button [matMenuTriggerFor]="menu">
+  Reset items
+</ion-button>
+<mat-menu #menu="matMenu">
+  <button mat-menu-item>Item 1</button>
+  <button mat-menu-item>Item 2</button>
+</mat-menu>
+
+
+<mat-progress-bar mode="determinate" value="40"></mat-progress-bar>
+
+</ion-content>
